@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# RStudio
+.Rhistory
+.Rproj.user/
+
+# Portfolio source photos (333 MB, stored separately)
+# The web uses optimized copies in WEB/assets/projects/
+PORTAFOLIO/
+
+# Uploads scratch dir
+WEB/uploads/
+
+# Scraps
+WEB/scraps/
+
+# Generated/offline artifact
+WEB/Terracota Studio (offline).html
+WEB/images-inline.js
