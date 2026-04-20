@@ -44,32 +44,40 @@ jobs:
       - name: Pre-compile JSX with esbuild
         run: |
           set -euo pipefail
-          npx --yes esbuild@0.24 WEB/components.jsx \
-            --loader:.jsx=jsx --target=es2019 --outfile=_site/components.js
-          npx --yes esbuild@0.24 WEB/app.jsx \
-            --loader:.jsx=jsx --target=es2019 --outfile=_site/app.js
+          # Concatenate both JSX sources and compile as a single script to
+          # avoid duplicate top-level `const { useState... } = React;`
+          # declarations (which throw SyntaxError across sibling <script> tags).
+          mkdir -p _build
+          # Strip app.jsx's `const { useState, useEffect } = React;` —
+          # already declared in components.jsx, would collide on concat.
+          {
+            cat WEB/components.jsx
+            sed -E '/^const \{[^}]*\} = React;[[:space:]]*$/d' WEB/app.jsx
+          } > _build/bundle.jsx
+          npx --yes esbuild@0.24 _build/bundle.jsx \
+            --loader:.jsx=jsx --target=es2019 --outfile=_site/bundle.js
 
       - name: Rewrite script tags in index.html
         run: |
           set -euo pipefail
           python3 <<'PY'
           from pathlib import Path
+          import re
           p = Path('_site/index.html')
           html = p.read_text()
           # Drop the Babel standalone loader (no longer needed, saves ~3MB + CPU).
-          import re
           html = re.sub(r'\s*<script[^>]*@babel/standalone[^>]*></script>\s*', '\n', html)
-          # Swap the in-browser JSX script tags for pre-compiled JS.
+          # Replace both JSX script tags with a single compiled bundle.
           html = html.replace(
               '<script type="text/babel" data-presets="react,env" src="components.jsx"></script>',
-              '<script src="components.js"></script>')
+              '<script src="bundle.js"></script>')
           html = html.replace(
               '<script type="text/babel" data-presets="react,env" src="app.jsx"></script>',
-              '<script src="app.js"></script>')
+              '')
           p.write_text(html)
           PY
           echo "--- Final script tags ---"
-          grep -nE 'babel|components\.|app\.' _site/index.html | head -20 || true
+          grep -nE 'babel|components\.|app\.|bundle\.' _site/index.html | head -20 || true
 
       - uses: actions/upload-pages-artifact@v3
         with:
