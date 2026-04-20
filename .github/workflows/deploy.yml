@@ -45,9 +45,9 @@ jobs:
         run: |
           set -euo pipefail
           npx --yes esbuild@0.24 WEB/components.jsx \
-            --loader=jsx --target=es2019 --outfile=_site/components.js
+            --loader:.jsx=jsx --target=es2019 --outfile=_site/components.js
           npx --yes esbuild@0.24 WEB/app.jsx \
-            --loader=jsx --target=es2019 --outfile=_site/app.js
+            --loader:.jsx=jsx --target=es2019 --outfile=_site/app.js
 
       - name: Rewrite script tags in index.html
         run: |
