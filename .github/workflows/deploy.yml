@@ -1,0 +1,53 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'WEB/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage publishable site from WEB/
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          rsync -a \
+            --exclude 'reference/' \
+            --exclude 'scraps/' \
+            --exclude 'uploads/' \
+            --exclude '*(offline)*' \
+            WEB/ _site/
+          mv "_site/Terracota Studio.html" _site/index.html
+          touch _site/.nojekyll
+          echo "--- Published files ---"
+          find _site -maxdepth 2 -type f | sort
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
