@@ -23,6 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Stage publishable site from WEB/
         run: |
           set -euo pipefail
@@ -32,11 +36,40 @@ jobs:
             --exclude 'scraps/' \
             --exclude 'uploads/' \
             --exclude '*(offline)*' \
+            --exclude '*.jsx' \
             WEB/ _site/
           mv "_site/Terracota Studio.html" _site/index.html
           touch _site/.nojekyll
-          echo "--- Published files ---"
-          find _site -maxdepth 2 -type f | sort
+
+      - name: Pre-compile JSX with esbuild
+        run: |
+          set -euo pipefail
+          npx --yes esbuild@0.24 WEB/components.jsx \
+            --loader=jsx --target=es2019 --outfile=_site/components.js
+          npx --yes esbuild@0.24 WEB/app.jsx \
+            --loader=jsx --target=es2019 --outfile=_site/app.js
+
+      - name: Rewrite script tags in index.html
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('_site/index.html')
+          html = p.read_text()
+          # Drop the Babel standalone loader (no longer needed, saves ~3MB + CPU).
+          import re
+          html = re.sub(r'\s*<script[^>]*@babel/standalone[^>]*></script>\s*', '\n', html)
+          # Swap the in-browser JSX script tags for pre-compiled JS.
+          html = html.replace(
+              '<script type="text/babel" data-presets="react,env" src="components.jsx"></script>',
+              '<script src="components.js"></script>')
+          html = html.replace(
+              '<script type="text/babel" data-presets="react,env" src="app.jsx"></script>',
+              '<script src="app.js"></script>')
+          p.write_text(html)
+          PY
+          echo "--- Final script tags ---"
+          grep -nE 'babel|components\.|app\.' _site/index.html | head -20 || true
 
       - uses: actions/upload-pages-artifact@v3
         with:
