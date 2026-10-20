@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Terracota Studio</title>
+    <script>
+      // GitHub Pages no sirve SPAs: una ruta profunda del showroom llega aquí.
+      // Se reenvía a /<repo>/showroom/?ruta=<resto> y main.tsx restaura la URL.
+      // Cualquier otra ruta vuelve al inicio del sitio.
+      (function () {
+        var partes = location.pathname.split("/");
+        var base = "/" + partes[1] + "/";
+        var marca = base + "showroom/";
+        if (location.pathname.indexOf(marca) === 0) {
+          var resto = location.pathname.slice(marca.length) + location.search;
+          location.replace(marca + "?ruta=" + encodeURIComponent(resto) + location.hash);
+        } else {
+          location.replace(base);
+        }
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

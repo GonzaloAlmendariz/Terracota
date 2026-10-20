@@ -1,0 +1,285 @@
+{
+  "proyecto": {
+    "nombre": "Proyecto de prueba",
+    "distrito": "Lima",
+    "pisos": 5,
+    "deptosPorPiso": 4,
+    "aviso": "Modelo y datos de prueba. Las imágenes son referenciales."
+  },
+  "tipologias": {
+    "A": {
+      "nombre": "Tipo A",
+      "modelo": "modelos/tipo-a.glb",
+      "ambientes": [
+        {
+          "id": "sala",
+          "nombre": "Sala-comedor",
+          "panorama": "360/prueba/sala.png"
+        },
+        {
+          "id": "cocina",
+          "nombre": "Cocina",
+          "panorama": "360/prueba/cocina.png"
+        },
+        {
+          "id": "dormitorio",
+          "nombre": "Dormitorio principal",
+          "panorama": "360/prueba/dormitorio.png"
+        },
+        {
+          "id": "bano-principal",
+          "nombre": "Baño principal",
+          "panorama": "360/prueba/bano-principal.png"
+        },
+        {
+          "id": "bano-visitas",
+          "nombre": "Baño de visitas",
+          "panorama": "360/prueba/bano-visitas.png"
+        },
+        {
+          "id": "terraza",
+          "nombre": "Terraza",
+          "panorama": "360/prueba/terraza.png"
+        }
+      ]
+    },
+    "B": {
+      "nombre": "Tipo B (espejo)",
+      "modelo": "modelos/tipo-b.glb",
+      "ambientes": [
+        {
+          "id": "sala",
+          "nombre": "Sala-comedor",
+          "panorama": "360/prueba/sala.png"
+        },
+        {
+          "id": "cocina",
+          "nombre": "Cocina",
+          "panorama": "360/prueba/cocina.png"
+        },
+        {
+          "id": "dormitorio",
+          "nombre": "Dormitorio principal",
+          "panorama": "360/prueba/dormitorio.png"
+        },
+        {
+          "id": "bano-principal",
+          "nombre": "Baño principal",
+          "panorama": "360/prueba/bano-principal.png"
+        },
+        {
+          "id": "bano-visitas",
+          "nombre": "Baño de visitas",
+          "panorama": "360/prueba/bano-visitas.png"
+        },
+        {
+          "id": "terraza",
+          "nombre": "Terraza",
+          "panorama": "360/prueba/terraza.png"
+        }
+      ]
+    }
+  },
+  "unidades": [
+    {
+      "id": "101",
+      "piso": 1,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 151500,
+      "estado": "disponible"
+    },
+    {
+      "id": "102",
+      "piso": 1,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 155700,
+      "estado": "vendido"
+    },
+    {
+      "id": "103",
+      "piso": 1,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 155700,
+      "estado": "disponible"
+    },
+    {
+      "id": "104",
+      "piso": 1,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 151500,
+      "estado": "disponible"
+    },
+    {
+      "id": "201",
+      "piso": 2,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 155000,
+      "estado": "reservado"
+    },
+    {
+      "id": "202",
+      "piso": 2,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 159200,
+      "estado": "reservado"
+    },
+    {
+      "id": "203",
+      "piso": 2,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 159200,
+      "estado": "disponible"
+    },
+    {
+      "id": "204",
+      "piso": 2,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 155000,
+      "estado": "disponible"
+    },
+    {
+      "id": "301",
+      "piso": 3,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 158500,
+      "estado": "vendido"
+    },
+    {
+      "id": "302",
+      "piso": 3,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 162700,
+      "estado": "disponible"
+    },
+    {
+      "id": "303",
+      "piso": 3,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 162700,
+      "estado": "disponible"
+    },
+    {
+      "id": "304",
+      "piso": 3,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 158500,
+      "estado": "reservado"
+    },
+    {
+      "id": "401",
+      "piso": 4,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 162000,
+      "estado": "reservado"
+    },
+    {
+      "id": "402",
+      "piso": 4,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 166200,
+      "estado": "disponible"
+    },
+    {
+      "id": "403",
+      "piso": 4,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 166200,
+      "estado": "disponible"
+    },
+    {
+      "id": "404",
+      "piso": 4,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 162000,
+      "estado": "vendido"
+    },
+    {
+      "id": "501",
+      "piso": 5,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 165500,
+      "estado": "disponible"
+    },
+    {
+      "id": "502",
+      "piso": 5,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 169700,
+      "estado": "disponible"
+    },
+    {
+      "id": "503",
+      "piso": 5,
+      "tipologia": "B",
+      "area_m2": 63.2,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 169700,
+      "estado": "reservado"
+    },
+    {
+      "id": "504",
+      "piso": 5,
+      "tipologia": "A",
+      "area_m2": 61.5,
+      "dormitorios": 1,
+      "banos": 2,
+      "precio_usd": 165500,
+      "estado": "reservado"
+    }
+  ]
+}

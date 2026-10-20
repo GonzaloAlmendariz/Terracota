@@ -1,0 +1,10 @@
+node_modules/
+dist/
+# Fuentes pesadas: .skp, EXR y renders originales viven fuera de git (ver README).
+fuentes/
+*.skp
+*.skb
+*.vrscene
+*.exr
+dist-demo/
+*.tsbuildinfo

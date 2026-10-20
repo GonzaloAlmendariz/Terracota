@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'WEB/**'
+      - 'SHOWROOM/**'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
@@ -78,6 +79,23 @@ jobs:
           PY
           echo "--- Final script tags ---"
           grep -nE 'babel|components\.|app\.|bundle\.' _site/index.html | head -20 || true
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Build showroom 3D into _site/showroom
+        run: |
+          set -euo pipefail
+          # Pages sirve el repo en /<repo>/; el showroom cuelga de /<repo>/showroom/.
+          export SHOWROOM_BASE="/${GITHUB_REPOSITORY#*/}/showroom/"
+          pnpm -C SHOWROOM install --frozen-lockfile
+          pnpm -C SHOWROOM build
+          mkdir -p _site/showroom
+          cp -R SHOWROOM/dist/. _site/showroom/
+          # Enlaces profundos (/showroom/piso/2/depto/201): Pages devuelve el 404
+          # de la raíz; este lo reenvía al showroom, que restaura la ruta.
+          cp SHOWROOM/pages-404.html _site/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:

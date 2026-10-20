@@ -1,0 +1,35 @@
+{
+  "name": "terracota-showroom",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "modelo:prueba": "node scripts/generar-modelo-prueba.mjs",
+    "360:prueba": "node scripts/generar-360-prueba.mjs",
+    "unidades": "node scripts/excel-a-unidades.mjs",
+    "demo": "VITE_DEMO=1 vite build --base ./ --outDir dist-demo && node scripts/armar-demo-artifact.mjs"
+  },
+  "dependencies": {
+    "@react-three/drei": "9.117.3",
+    "@react-three/fiber": "8.17.10",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.28.0",
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.1.1",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@types/three": "0.170.0",
+    "@vitejs/plugin-react": "4.3.4",
+    "pngjs": "7.0.0",
+    "typescript": "5.6.3",
+    "vite": "6.0.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  }
+}

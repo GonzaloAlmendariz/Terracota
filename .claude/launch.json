@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8080", "--directory", "WEB"],
       "port": 8080
+    },
+    {
+      "name": "Terracota Showroom 3D",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["-C", "SHOWROOM", "exec", "vite", "--port", "5180", "--strictPort"],
+      "port": 5180
     }
   ]
 }
