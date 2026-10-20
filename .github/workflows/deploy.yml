@@ -6,6 +6,11 @@ on:
     paths:
       - 'WEB/**'
       - 'SHOWROOM/**'
+      - 'marca/**'
+      - 'scripts/construir-sitio.mjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
@@ -24,78 +29,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+          cache: pnpm
 
-      - name: Stage publishable site from WEB/
-        run: |
-          set -euo pipefail
-          mkdir -p _site
-          rsync -a \
-            --exclude 'reference/' \
-            --exclude 'scraps/' \
-            --exclude 'uploads/' \
-            --exclude '*(offline)*' \
-            --exclude '*.jsx' \
-            WEB/ _site/
-          mv "_site/Terracota Studio.html" _site/index.html
-          touch _site/.nojekyll
+      - name: Install
+        run: pnpm install --frozen-lockfile
 
-      - name: Pre-compile JSX with esbuild
-        run: |
-          set -euo pipefail
-          # Concatenate both JSX sources and compile as a single script to
-          # avoid duplicate top-level `const { useState... } = React;`
-          # declarations (which throw SyntaxError across sibling <script> tags).
-          mkdir -p _build
-          # Strip app.jsx's `const { useState, useEffect } = React;` —
-          # already declared in components.jsx, would collide on concat.
-          {
-            cat WEB/components.jsx
-            sed -E '/^const \{[^}]*\} = React;[[:space:]]*$/d' WEB/app.jsx
-          } > _build/bundle.jsx
-          npx --yes esbuild@0.24 _build/bundle.jsx \
-            --loader:.jsx=jsx --target=es2019 --outfile=_site/bundle.js
-
-      - name: Rewrite script tags in index.html
-        run: |
-          set -euo pipefail
-          python3 <<'PY'
-          from pathlib import Path
-          import re
-          p = Path('_site/index.html')
-          html = p.read_text()
-          # Drop the Babel standalone loader (no longer needed, saves ~3MB + CPU).
-          html = re.sub(r'\s*<script[^>]*@babel/standalone[^>]*></script>\s*', '\n', html)
-          # Replace both JSX script tags with a single compiled bundle.
-          html = html.replace(
-              '<script type="text/babel" data-presets="react,env" src="components.jsx"></script>',
-              '<script src="bundle.js"></script>')
-          html = html.replace(
-              '<script type="text/babel" data-presets="react,env" src="app.jsx"></script>',
-              '')
-          p.write_text(html)
-          PY
-          echo "--- Final script tags ---"
-          grep -nE 'babel|components\.|app\.|bundle\.' _site/index.html | head -20 || true
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Build showroom 3D into _site/showroom
-        run: |
-          set -euo pipefail
-          # Pages sirve el repo en /<repo>/; el showroom cuelga de /<repo>/showroom/.
-          export SHOWROOM_BASE="/${GITHUB_REPOSITORY#*/}/showroom/"
-          pnpm -C SHOWROOM install --frozen-lockfile
-          pnpm -C SHOWROOM build
-          mkdir -p _site/showroom
-          cp -R SHOWROOM/dist/. _site/showroom/
-          # Enlaces profundos (/showroom/piso/2/depto/201): Pages devuelve el 404
-          # de la raíz; este lo reenvía al showroom, que restaura la ruta.
-          cp SHOWROOM/pages-404.html _site/404.html
+      # Web (Vite + pre-render) en la raíz y showroom en /showroom/, en _site/.
+      - name: Build site
+        run: pnpm build
 
       - uses: actions/upload-pages-artifact@v3
         with:

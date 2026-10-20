@@ -1,0 +1,12 @@
+/* 02 · Servicios. */
+
+/* Services */
+.services { padding: 0 48px 120px; border-top: 1px solid var(--line); }
+.services__list { display: flex; flex-direction: column; }
+.service-row { display: grid; grid-template-columns: 80px 1.2fr 1fr; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); cursor: default; position: relative; }
+.service-row .n { font-family: var(--mono); color: var(--muted); font-size: 11px; letter-spacing: .2em; }
+.service-row .t { font-family: var(--display); font-size: clamp(28px, 4vw, 56px); line-height: .95; letter-spacing: 0; text-transform: uppercase; }
+.service-row .k { color: var(--cream-soft); font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; text-align: right; }
+@media (max-width: 900px){ .services{padding:0 20px 60px} .service-row{grid-template-columns: 30px 1fr; gap: 12px;} .service-row .k{display:none} }
+
+.service-row:nth-child(2n) .n.mono { color: var(--accent-ochre); }

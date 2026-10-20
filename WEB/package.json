@@ -1,0 +1,27 @@
+{
+  "name": "terracota-web",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "imagenes": "node scripts/optimizar-imagenes.mjs",
+    "predev": "node scripts/optimizar-imagenes.mjs",
+    "dev": "vite",
+    "build": "node scripts/optimizar-imagenes.mjs && tsc --noEmit && vite build && vite build --ssr src/servidor.tsx --outDir dist-servidor && node scripts/prerenderizar.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@terracota/marca": "workspace:*",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "sharp": "0.33.5",
+    "typescript": "5.6.3",
+    "vite": "6.0.3"
+  }
+}

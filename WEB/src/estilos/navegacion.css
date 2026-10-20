@@ -1,0 +1,23 @@
+/* Barra superior fija. */
+
+/* Nav */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index:200;
+  padding: 20px 48px; display:flex; align-items:center; justify-content:space-between;
+  mix-blend-mode: difference; color: #fff;
+}
+.nav__brand { display:flex; align-items:center; gap: 10px; }
+.nav__brand .brand-iso { width: 26px; height:26px; border-radius:50%; background: #fff; color: #0f0c09; display:inline-flex; align-items:center; justify-content:center; font-family: var(--display); font-size: 18px; }
+.nav__brand .brand-wm { font-family: var(--display); font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase;}
+.nav__brand .brand-wm em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var(--accent-soft); text-transform: none; letter-spacing: -0.01em; padding-left: 2px;}
+.nav__links { display:flex; gap: 28px; }
+.nav__links a { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; position:relative; padding: 6px 0;}
+.nav__links a::after{ content:''; position:absolute; left:0; right:100%; bottom:0; height:1px; background: currentColor; transition: right .35s ease; }
+.nav__links a:hover::after{ right:0; }
+.nav__menu { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; display:flex; align-items:center; gap:10px; }
+.nav__menu .dot { width:6px; height:6px; border-radius:50%; background: var(--accent-soft);}
+@media (max-width: 900px){ .nav{padding:16px 20px} .nav__links{display:none} }
+
+/* El enlace al recorrido lleva un punto de acento: es otra página, no una sección. */
+.nav__tour { display:inline-flex; align-items:center; gap: 8px; }
+.nav__tour::before { content:''; width:5px; height:5px; border-radius:50%; background: var(--accent-soft); }

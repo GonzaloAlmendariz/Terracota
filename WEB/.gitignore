@@ -1,0 +1,5 @@
+node_modules/
+dist/
+dist-servidor/
+# Generadas desde imagenes/ por scripts/optimizar-imagenes.mjs
+public/img/

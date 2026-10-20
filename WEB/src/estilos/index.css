@@ -1,0 +1,20 @@
+/* Hoja única de la web. El orden de los @import ES el orden de la cascada:
+   reproduce el de la hoja original, así que no se reordena sin revisar qué
+   reglas de igual especificidad dependen de venir después. */
+
+@import "@terracota/marca/tokens.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./cargador.css";
+@import "./navegacion.css";
+@import "./portada.css";
+@import "./secciones.css";
+@import "./sobre.css";
+@import "./portafolio.css";
+@import "./ficha-proyecto.css";
+@import "./contacto.css";
+@import "./servicios.css";
+@import "./filosofia.css";
+@import "./pie.css";
+@import "./indice.css";
+@import "./equipo.css";

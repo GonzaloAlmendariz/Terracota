@@ -1,0 +1,36 @@
+/* 03 · Filosofía: principios y muestras de material. */
+
+/* Philosophy */
+.philosophy { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 0 48px 120px; border-top: 1px solid var(--line); padding-top: 40px; }
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.principle { background: var(--bg); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 320px; transition: background .3s; }
+.principle:hover { background: var(--bg-soft); }
+.principle .num { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--accent); margin-bottom: 16px; }
+.principle .ttl { font-family: var(--display); font-size: 44px; line-height: 1; letter-spacing: 0; text-transform: uppercase; margin-bottom: 14px; }
+.principle .desc { color: var(--cream-soft); font-size: 14px; line-height: 1.6; }
+.principle .glyph { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 64px; color: var(--accent-soft); align-self: flex-end; }
+@media (max-width: 900px){ .philosophy{grid-template-columns:1fr; padding:0 20px 60px} .principles{grid-template-columns:1fr} }
+
+/* Material swatches under each philosophy principle */
+.principle__swatches {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  margin-top: 20px; padding-top: 18px;
+  border-top: 1px dashed var(--line);
+}
+.swatch { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.swatch__chip {
+  display: block; width: 100%; aspect-ratio: 1 / 1;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3);
+  transition: transform .3s ease;
+}
+.swatch:hover .swatch__chip { transform: translateY(-2px) rotate(-1deg); }
+.swatch__label {
+  font-size: 8px; letter-spacing: 0.2em; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+}
+
+@media (max-width: 560px) {
+  .principle__swatches { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .swatch__label { font-size: 7px; letter-spacing: 0.15em; }
+}

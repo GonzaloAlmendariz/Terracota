@@ -1,0 +1,23 @@
+/* 01 · Sobre: manifiesto, misión y visión. */
+
+/* About */
+.manifesto { padding: 40px 48px 120px; display:grid; grid-template-columns: 180px 1fr 1fr; gap:40px; }
+.manifesto .col p + p { margin-top: 1em; }
+.manifesto .quote { font-family: var(--serif); font-weight: 300; font-size: clamp(24px, 2.6vw, 36px); line-height: 1.3; letter-spacing: -0.01em; font-style: italic; color: var(--cream); }
+.manifesto .quote span { color: var(--accent-soft); }
+@media (max-width: 900px){ .manifesto{grid-template-columns:1fr; padding: 20px 20px 60px} }
+
+/* === Misión / Visión === */
+.mision-vision { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 80px 48px 40px; border-top: 1px solid var(--line); }
+.mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.mv-card { background: var(--bg-soft); padding: 32px; border: 1px solid var(--line); border-radius: 2px; transition: border-color .3s ease; }
+.mv-card:hover { border-color: var(--accent-soft); }
+.mv-num { color: var(--accent-soft); margin-bottom: 14px; }
+.mv-body { font-size: 15px; line-height: 1.65; color: var(--cream-soft); font-weight: 300; }
+@media (max-width: 900px) {
+  .mision-vision { grid-template-columns: 1fr; padding: 60px 20px 30px; gap: 24px; }
+  .mv-grid { grid-template-columns: 1fr; gap: 20px; }
+  .mv-card { padding: 24px; }
+}
+
+.mv-card:nth-child(2n) .mv-num { color: var(--accent-ochre); }

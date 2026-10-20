@@ -1,0 +1,39 @@
+/* Portada (hero) y botones redondeados que también usa el portafolio. */
+
+/* Hero */
+.hero { position: relative; z-index: 2; min-height: 100vh; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom: 40px; }
+.hero__img { position:absolute; inset:0; filter: saturate(0.95); transform: scale(1.05); animation: slowpan 20s ease-in-out infinite alternate;}
+/* La foto es una <img> con srcset: el navegador baja sólo el tamaño que necesita. */
+.hero__img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+@keyframes slowpan { to { transform: scale(1.1) translate(-1%, -1%); } }
+.hero__img::after{ content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 30%, transparent 40%, rgba(0,0,0,0.55) 100%), linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 30%, transparent 55%, rgba(0,0,0,0.8) 100%); }
+.hero__content { position:relative; padding: 48px; display:grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: end; }
+.hero__headline {
+  font-family: var(--display); font-weight:400; font-size: clamp(56px, 9.2vw, 140px);
+  line-height: 0.88; letter-spacing: -0.01em; color: #fff; text-transform: uppercase;
+}
+.hero__headline em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var(--accent-soft); text-transform: none; letter-spacing: -0.02em; }
+.hero__meta { display:flex; flex-direction:column; gap: 18px; align-items: flex-start; padding-bottom: 12px; }
+.hero__lede { max-width: 38ch; color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.65; }
+.hero__cta { display:inline-flex; align-items:center; gap:10px; padding: 14px 22px; background: #fff; color: #0f0c09; border-radius: 999px; font-family: var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; transition: transform .3s, background .3s, color .3s; }
+.hero__cta:hover{ transform: translateY(-2px); background: var(--accent); color: #fff;}
+.hero__ctas { display:flex; flex-wrap:wrap; gap: 10px; }
+.hero__cta--ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.55); }
+.hero__cta--ghost:hover { border-color: var(--accent); }
+
+.hero__cta .arr { display:inline-block; transition: transform .3s; }
+.hero__cta:hover .arr { transform: translate(3px,-3px); }
+
+.hero__footer { position:absolute; left:48px; right:48px; bottom: 28px; display:flex; justify-content:space-between; align-items:flex-end; color: rgba(255,255,255,0.7); gap: 24px;}
+.hero__index { font-family: var(--mono); font-size: 10px; letter-spacing:.22em; text-transform:uppercase;}
+.hero__scroll { width: 54px; height: 54px; border-radius:50%; border:1px solid rgba(255,255,255,0.4); display:flex; align-items:center;justify-content:center; animation: bob 3s ease-in-out infinite; flex-shrink:0;}
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+.hero__scroll svg{ stroke: #fff; }
+
+@media (max-width: 900px){ .hero__content{ grid-template-columns: 1fr; padding: 24px; } .hero__footer{ left:20px; right:20px; } }
+/* Con dos botones apilados, el contenido llegaba hasta el pie de la portada (posición absoluta): se le reserva su alto. */
+@media (max-width: 900px){ .hero { padding-bottom: 96px; } }
+
+/* Hero headline: gentle vertical offset between lines — editorial, eclectic */
+.hero__headline { position: relative; }
+.hero__headline em { display: inline-block; transform: translateY(0.03em); }

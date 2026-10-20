@@ -5,8 +5,8 @@
 .Rhistory
 .Rproj.user/
 
-# Portfolio source photos (333 MB, stored separately)
-# The web uses optimized copies in WEB/assets/projects/
+# Fotos originales del portafolio (333 MB, se guardan aparte).
+# La web usa copias en WEB/imagenes/ y las sirve optimizadas.
 PORTAFOLIO/
 
 # Uploads scratch dir
@@ -15,6 +15,9 @@ WEB/uploads/
 # Scraps
 WEB/scraps/
 
-# Generated/offline artifact
+# Versión anterior de la web (un solo HTML), sólo en copias locales viejas
 WEB/Terracota Studio (offline).html
 WEB/images-inline.js
+node_modules/
+_site/
+qa/capturas/

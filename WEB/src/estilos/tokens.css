@@ -1,0 +1,20 @@
+/* Variables de la web, enlazadas a la identidad compartida (@terracota/marca).
+   Los componentes usan estos nombres; los valores viven en marca/tokens.css. */
+
+:root {
+  --bg: var(--terracota-fondo);
+  --bg-soft: var(--terracota-fondo-suave);
+  --cream: var(--terracota-crema);
+  --cream-soft: var(--terracota-crema-suave);
+  --muted: var(--terracota-gris);
+  --line: var(--terracota-linea);
+  --line-strong: var(--terracota-linea-fuerte);
+  --accent: var(--terracota-acento);
+  --accent-soft: var(--terracota-acento-suave);
+  --accent-ochre: var(--terracota-ocre);
+  --accent-olive: var(--terracota-oliva);
+  --display: var(--terracota-titular);
+  --serif: var(--terracota-serif);
+  --sans: var(--terracota-texto);
+  --mono: var(--terracota-mono);
+}

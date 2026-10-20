@@ -1,0 +1,30 @@
+/* Terracota Studio — identidad visual compartida.
+   Fuente única de los colores y tipografías de la marca. La web y el showroom
+   mapean sus propias variables a estas; un cambio de marca se hace aquí. */
+
+:root {
+  /* Superficies */
+  --terracota-fondo: #0f0c09;
+  --terracota-fondo-suave: #1a1510;
+
+  /* Texto */
+  --terracota-crema: #efe8dd;
+  --terracota-crema-suave: #c9bfae;
+  --terracota-gris: #8e8478;
+
+  /* Líneas */
+  --terracota-linea: rgba(239, 232, 221, 0.12);
+  --terracota-linea-fuerte: rgba(239, 232, 221, 0.28);
+
+  /* Acentos */
+  --terracota-acento: #b4563a;
+  --terracota-acento-suave: #d48b6e;
+  --terracota-ocre: #c8a35e;
+  --terracota-oliva: #6b7a52;
+
+  /* Tipografías */
+  --terracota-titular: "Anton", Impact, sans-serif;
+  --terracota-serif: "Fraunces", Georgia, serif;
+  --terracota-texto: "Inter", system-ui, sans-serif;
+  --terracota-mono: "JetBrains Mono", ui-monospace, monospace;
+}

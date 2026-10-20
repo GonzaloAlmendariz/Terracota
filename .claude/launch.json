@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Terracota Studio Web (static)",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "WEB"],
-      "port": 8080
+      "name": "Terracota Studio Web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["-C", "WEB", "exec", "vite", "--port", "5173", "--strictPort"],
+      "port": 5173
     },
     {
       "name": "Terracota Showroom 3D",

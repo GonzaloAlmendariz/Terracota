@@ -1,28 +1,31 @@
 /* Showroom 3D · Terracota Studio
    Dirección: lámina de arquitectura editorial. El 3D ocupa todo el lienzo;
    la interfaz flota encima como capas de vidrio cálido, con cotas en mono,
-   numerales en Fraunces y líneas de 1px. Paleta tomada de la web del estudio. */
+   numerales en Fraunces y líneas de 1px. Colores de la marca compartida
+   (@terracota/marca); lo propio del showroom se define aquí. */
+
+@import "@terracota/marca/tokens.css";
 
 :root {
-  --bg: #0f0c09;
+  --bg: var(--terracota-fondo);
   --bg-2: #16110d;
-  --cream: #efe8dd;
-  --cream-2: #c9bfae;
-  --muted: #8e8478;
-  --hair: rgba(239, 232, 221, 0.12);
+  --cream: var(--terracota-crema);
+  --cream-2: var(--terracota-crema-suave);
+  --muted: var(--terracota-gris);
+  --hair: var(--terracota-linea);
   --hair-2: rgba(239, 232, 221, 0.22);
-  --accent: #b4563a;
-  --accent-soft: #d48b6e;
+  --accent: var(--terracota-acento);
+  --accent-soft: var(--terracota-acento-suave);
   --vidrio: rgba(22, 17, 13, 0.62);
   --vidrio-borde: rgba(239, 232, 221, 0.1);
 
   --estado-disponible: #8a9a6b;
-  --estado-reservado: #c8a35e;
+  --estado-reservado: var(--terracota-ocre);
   --estado-vendido: #6e655b;
 
-  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --display: var(--terracota-serif);
   --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --mono: var(--terracota-mono);
 
   --gutter: clamp(16px, 2.4vw, 36px);
   --panel: clamp(300px, 26vw, 380px);

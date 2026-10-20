@@ -1,0 +1,9 @@
+{
+  "name": "@terracota/marca",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Identidad visual de Terracota Studio: colores y tipografías compartidos por la web y el showroom.",
+  "exports": {
+    "./tokens.css": "./tokens.css"
+  }
+}
