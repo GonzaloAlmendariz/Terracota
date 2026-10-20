@@ -59,7 +59,8 @@ export function FichaUnidad({ unidad, ambienteActivo, onAmbiente }: Props) {
             {tip.ambientes.map((a) => (
               <li key={a.id}>
                 <button type="button" className={a.id === ambienteActivo ? "activo" : undefined} onClick={() => onAmbiente(a.id)}>
-                  {a.nombre}
+                  <span>{a.nombre}</span>
+                  {a.area_m2 !== undefined && <span className="ambiente-area">{a.area_m2.toLocaleString("es-PE", { maximumFractionDigits: 1 })} m²</span>}
                 </button>
               </li>
             ))}

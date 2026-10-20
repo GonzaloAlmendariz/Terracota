@@ -15,32 +15,43 @@
           "id": "sala",
           "nombre": "Sala-comedor",
           "panorama": "360/tipo-a/sala.webp",
-          "rumbo": 180
+          "rumbo": 180,
+          "area_m2": 22.5
         },
         {
           "id": "cocina",
           "nombre": "Cocina",
-          "panorama": "360/tipo-a/cocina.webp"
+          "panorama": "360/tipo-a/cocina.webp",
+          "rumbo": 90,
+          "area_m2": 9.6
         },
         {
           "id": "dormitorio",
           "nombre": "Dormitorio principal",
-          "panorama": "360/tipo-a/dormitorio.webp"
+          "panorama": "360/tipo-a/dormitorio.webp",
+          "rumbo": 270,
+          "area_m2": 14
         },
         {
           "id": "bano-principal",
           "nombre": "Baño principal",
-          "panorama": "360/tipo-a/bano-principal.webp"
+          "panorama": "360/tipo-a/bano-principal.webp",
+          "rumbo": 0,
+          "area_m2": 5.6
         },
         {
           "id": "bano-visitas",
           "nombre": "Baño de visitas",
-          "panorama": "360/tipo-a/bano-visitas.webp"
+          "panorama": "360/tipo-a/bano-visitas.webp",
+          "rumbo": 90,
+          "area_m2": 8.4
         },
         {
           "id": "terraza",
           "nombre": "Terraza",
-          "panorama": "360/tipo-a/terraza.webp"
+          "panorama": "360/tipo-a/terraza.webp",
+          "rumbo": 180,
+          "area_m2": 7.5
         }
       ]
     },
@@ -52,32 +63,43 @@
           "id": "sala",
           "nombre": "Sala-comedor",
           "panorama": "360/tipo-b/sala.webp",
-          "rumbo": 180
+          "rumbo": 180,
+          "area_m2": 22.5
         },
         {
           "id": "cocina",
           "nombre": "Cocina",
-          "panorama": "360/tipo-b/cocina.webp"
+          "panorama": "360/tipo-b/cocina.webp",
+          "rumbo": 270,
+          "area_m2": 9.6
         },
         {
           "id": "dormitorio",
           "nombre": "Dormitorio principal",
-          "panorama": "360/tipo-b/dormitorio.webp"
+          "panorama": "360/tipo-b/dormitorio.webp",
+          "rumbo": 90,
+          "area_m2": 14
         },
         {
           "id": "bano-principal",
           "nombre": "Baño principal",
-          "panorama": "360/tipo-b/bano-principal.webp"
+          "panorama": "360/tipo-b/bano-principal.webp",
+          "rumbo": 0,
+          "area_m2": 5.6
         },
         {
           "id": "bano-visitas",
           "nombre": "Baño de visitas",
-          "panorama": "360/tipo-b/bano-visitas.webp"
+          "panorama": "360/tipo-b/bano-visitas.webp",
+          "rumbo": 270,
+          "area_m2": 8.4
         },
         {
           "id": "terraza",
           "nombre": "Terraza",
-          "panorama": "360/tipo-b/terraza.webp"
+          "panorama": "360/tipo-b/terraza.webp",
+          "rumbo": 180,
+          "area_m2": 7.5
         }
       ]
     }

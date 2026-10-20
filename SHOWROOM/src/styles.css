@@ -655,7 +655,8 @@ a {
 
 .ficha-ambientes li button {
   display: grid;
-  grid-template-columns: 26px 1fr auto;
+  grid-template-columns: 26px 1fr auto auto;
+  column-gap: 10px;
   width: 100%;
   padding: 6px 0;
   text-align: left;
@@ -778,45 +779,6 @@ a {
   align-items: center;
   gap: 12px;
   max-width: calc(100vw - var(--panel) - var(--gutter) * 3);
-}
-
-.segmentado {
-  position: relative;
-  display: inline-flex;
-  padding: 4px;
-  border-radius: 999px;
-  background: var(--vidrio);
-  border: 1px solid var(--vidrio-borde);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-
-.segmentado .indicador {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  border-radius: 999px;
-  background: var(--cream);
-  transition: transform 0.45s var(--ease), width 0.45s var(--ease);
-}
-
-.segmento {
-  position: relative;
-  z-index: 1;
-  padding: 9px 18px;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--cream-2);
-  white-space: nowrap;
-  transition: color 0.35s var(--ease);
-}
-
-.segmento:hover {
-  color: var(--cream);
-}
-
-.segmento.activo {
-  color: var(--bg);
 }
 
 .ambientes {
@@ -1209,7 +1171,6 @@ a {
 }
 
 .modo-360 .panel,
-.modo-360 .segmentado,
 .modo-360 .ambiente:not(.activo) {
   background: rgba(18, 14, 11, 0.86);
 }
@@ -1263,4 +1224,205 @@ a {
   .ficha-pie::before {
     display: none;
   }
+}
+
+/* ───────── Riel de vistas (como la barra de Hauzd) ───────── */
+
+.riel-vistas {
+  left: var(--gutter);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: aparecer 0.9s var(--ease) 0.45s both;
+}
+
+.riel-boton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  color: var(--cream);
+  background: var(--vidrio);
+  border: 1px solid var(--vidrio-borde);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.riel-boton:hover {
+  border-color: var(--hair-2);
+  transform: translateX(2px);
+}
+
+.riel-boton.activo {
+  background: var(--cream);
+  color: var(--bg);
+  border-color: var(--cream);
+}
+
+.riel-nombre {
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translate(-4px, -50%);
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: rgba(15, 12, 9, 0.9);
+  border: 1px solid var(--hair-2);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--cream);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.riel-boton:hover .riel-nombre,
+.riel-boton:focus-visible .riel-nombre {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* ───────── Plano y medidas ───────── */
+
+.chip-ambiente.con-area {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 6px 11px 6px 22px;
+  position: relative;
+}
+
+.chip-ambiente.con-area::before {
+  position: absolute;
+  left: 9px;
+  top: 11px;
+}
+
+.chip-ambiente small {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--cream-2);
+}
+
+.chip-ambiente.activo small,
+.chip-ambiente:hover small {
+  color: #fff8f2;
+}
+
+.cota-medida {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(15, 12, 9, 0.82);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.cota-medida.fuerte {
+  background: var(--accent);
+  color: #fff8f2;
+}
+
+.cota-nombre {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--bg);
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.etiqueta-3d.aqui {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.etiqueta-3d.aqui span {
+  color: #fff8f2;
+}
+
+@media (max-width: 760px) {
+  .riel-vistas {
+    top: auto;
+    left: 50%;
+    bottom: calc(44dvh + 12px);
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .riel-boton {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .riel-boton:hover {
+    transform: none;
+  }
+
+  .riel-nombre {
+    display: none;
+  }
+
+  .barra-inferior {
+    bottom: calc(44dvh + 64px);
+  }
+}
+
+.cota-compacta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(15, 12, 9, 0.84);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.cota-compacta em {
+  font-family: var(--display);
+  font-size: 11.5px;
+  color: var(--cream-2);
+}
+
+.ambiente-area {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.numero-ambiente {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(15, 12, 9, 0.84);
+  border: 1px solid var(--accent-soft);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--cream);
+}
+
+.numero-ambiente:active {
+  background: var(--accent);
 }

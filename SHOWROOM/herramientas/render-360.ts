@@ -87,7 +87,9 @@ async function renderizar(modelo: string, ancho: number, cara: number): Promise<
         float phi = vUv.x * 2.0 * PI;
         float theta = (1.0 - vUv.y) * PI;
         vec3 dir = vec3(cos(phi) * sin(theta), cos(theta), sin(phi) * sin(theta));
-        gl_FragColor = textureCube(cubo, vec3(-dir.x, dir.y, dir.z));
+        // Cubo de un render target: se muestrea con la dirección tal cual (sin el
+        // espejo en x que Three.js aplica a los cubos cargados de imágenes).
+        gl_FragColor = textureCube(cubo, dir);
         #include <tonemapping_fragment>
         #include <colorspace_fragment>
       }`,

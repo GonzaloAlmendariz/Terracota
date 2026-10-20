@@ -24,6 +24,8 @@ interface Props {
   unidades: Unidad[];
   visibles: Set<string>;
   nivel: number | null;
+  /** Departamento que se muestra «aquí»: va en terracota con su rótulo fijo. */
+  destacada?: string;
   onElegir: (u: Unidad) => void;
 }
 
@@ -74,7 +76,7 @@ function Mamparas({ col, fila, activo, encendida }: { col: number; fila: number;
   );
 }
 
-function Bloque({ u, activo, onElegir }: { u: Unidad; activo: boolean; onElegir: (u: Unidad) => void }) {
+function Bloque({ u, activo, destacado, onElegir }: { u: Unidad; activo: boolean; destacado?: boolean; onElegir: (u: Unidad) => void }) {
   const [encima, setEncima] = useState(false);
   // Maqueta de yeso: el estado tiñe el cuerpo, no lo pinta.
   const color = useMemo(() => new THREE.Color("#e2d9cb").lerp(new THREE.Color(COLOR_ESTADO_3D[u.estado]), 0.42), [u.estado]);
@@ -100,9 +102,9 @@ function Bloque({ u, activo, onElegir }: { u: Unidad; activo: boolean; onElegir:
     >
       <boxGeometry args={[ANCHO, ALTO_PISO, FONDO]} />
       <meshStandardMaterial
-        color={encima ? "#d48b6e" : color}
-        emissive={encima ? "#b4563a" : "#000000"}
-        emissiveIntensity={encima ? 0.25 : 0}
+        color={destacado ? "#b4563a" : encima ? "#d48b6e" : color}
+        emissive={destacado || encima ? "#b4563a" : "#000000"}
+        emissiveIntensity={destacado ? 0.35 : encima ? 0.25 : 0}
         roughness={0.82}
         metalness={0}
         transparent
@@ -111,12 +113,12 @@ function Bloque({ u, activo, onElegir }: { u: Unidad; activo: boolean; onElegir:
       />
       <Mamparas col={col} fila={fila} activo={activo} encendida={u.estado === "disponible"} />
       <Edges threshold={15} color={activo ? "#efe8dd" : "#5a524a"} lineWidth={activo ? 1 : 0.5} transparent opacity={activo ? 0.35 : 0.2} />
-      {encima && (
+      {(encima || destacado) && (
         <Html center position={[0, ALTO_PISO * 0.95, 0]} style={{ pointerEvents: "none" }} zIndexRange={[20, 10]}>
-          <div className="etiqueta-3d">
+          <div className={`etiqueta-3d${destacado ? " aqui" : ""}`}>
             <strong>{u.id}</strong>
             <span>
-              {ESTADOS[u.estado].etiqueta} · {formatoArea(u.area_m2)}
+              {destacado ? `Estás aquí · Nivel ${String(u.piso).padStart(2, "0")}` : `${ESTADOS[u.estado].etiqueta} · ${formatoArea(u.area_m2)}`}
             </span>
           </div>
         </Html>
@@ -138,20 +140,26 @@ function Losas() {
   );
 }
 
-export function Edificio3D({ unidades, visibles, nivel, onElegir }: Props) {
+export function Edificio3D({ unidades, visibles, nivel, destacada, onElegir }: Props) {
   const alto = proyecto.pisos * (ALTO_PISO + LOSA);
   const estrecho = typeof window !== "undefined" && window.innerWidth < 760;
   const objetivo = nivel ? yPiso(nivel) + ALTO_PISO / 2 : alto / 2;
+  // Con un depto destacado, la cámara se pone del lado de la torre donde está.
+  const aqui = destacada ? unidades.find((u) => u.id === destacada) : undefined;
+  const lado = aqui ? celda(aqui) : null;
   return (
-    <Canvas shadows camera={{ position: estrecho ? [-17, alto * 1.0, 19] : [-20, alto * 1.05, 23], fov: estrecho ? 36 : 26 }} dpr={[1, 2]}>
+    <Canvas shadows camera={{
+        position: lado ? [(lado.col === 0 ? -1 : 1) * (estrecho ? 21 : 18), alto * (estrecho ? 1.15 : 0.95), (lado.fila === 0 ? -1 : 1) * (estrecho ? 24 : 21)] : estrecho ? [-17, alto * 1.0, 19] : [-20, alto * 1.05, 23],
+        fov: estrecho ? 36 : 26,
+      }} dpr={[1, 2]}>
       <fog attach="fog" args={["#0f0c09", 38, 75]} />
       <hemisphereLight args={["#f3ebdf", "#1c1612", 0.75]} />
       <directionalLight position={[-7, 14, 9]} intensity={2.1} color="#fff1e2" castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-10} shadow-camera-right={10} shadow-camera-top={12} shadow-camera-bottom={-4} shadow-bias={-0.0004} />
       <directionalLight position={[9, 4, -6]} intensity={0.35} color="#d48b6e" />
-      <group position={estrecho ? [0, 0, 0] : [2.2, 0, 1.4]}>
+      <group position={estrecho || lado ? [0, 0, 0] : [2.2, 0, 1.4]}>
         <Losas />
         {unidades.map((u) => (
-          <Bloque key={u.id} u={u} activo={visibles.has(u.id)} onElegir={onElegir} />
+          <Bloque key={u.id} u={u} activo={visibles.has(u.id)} destacado={u.id === destacada} onElegir={onElegir} />
         ))}
         <mesh position={[0, -0.02, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
           <circleGeometry args={[14, 64]} />
@@ -159,7 +167,7 @@ export function Edificio3D({ unidades, visibles, nivel, onElegir }: Props) {
         </mesh>
         <ContactShadows position={[0, 0, 0]} opacity={0.6} scale={24} blur={2.6} far={8} color="#000000" />
       </group>
-      <OrbitControls target={estrecho ? [0, objetivo + 0.9, 0] : [2.2, objetivo, 1.4]} minDistance={9} maxDistance={36} maxPolarAngle={Math.PI / 2.08} enablePan={false} enableDamping dampingFactor={0.07} autoRotate={!nivel} autoRotateSpeed={0.25} />
+      <OrbitControls target={lado ? [0, objetivo, 0] : estrecho ? [0, objetivo + 0.9, 0] : [2.2, objetivo, 1.4]} minDistance={9} maxDistance={36} maxPolarAngle={Math.PI / 2.08} enablePan={false} enableDamping dampingFactor={0.07} autoRotate={!nivel && !destacada} autoRotateSpeed={0.25} />
     </Canvas>
   );
 }
