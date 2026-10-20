@@ -7,6 +7,8 @@ export interface Ambiente {
   nombre: string;
   /** Ruta relativa a public/ de la panorámica equirectangular (2:1). */
   panorama: string;
+  /** Hacia dónde mira la cámara al entrar, en grados (0 = centro del render, 90 = a la derecha). */
+  rumbo?: number;
 }
 
 export interface Tipologia {

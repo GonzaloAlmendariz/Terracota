@@ -49,9 +49,22 @@ function Rumbo({ onRumbo }: { onRumbo?: (grados: number) => void }) {
   return null;
 }
 
-export function Panorama360({ url, onRumbo }: { url: string; onRumbo?: (grados: number) => void }) {
+/** Gira la cámara al rumbo inicial cada vez que cambia la panorámica. */
+function RumboInicial({ url, grados }: { url: string; grados: number }) {
+  const camera = useThree((s) => s.camera);
+  useEffect(() => {
+    const r = THREE.MathUtils.degToRad(grados);
+    // La cámara orbita el centro a 1 cm: mirar en dirección d es ponerse en -d.
+    camera.position.set(-Math.sin(r) * 0.01, 0, Math.cos(r) * 0.01);
+    camera.lookAt(0, 0, 0);
+  }, [url, grados, camera]);
+  return null;
+}
+
+export function Panorama360({ url, rumbo = 0, onRumbo }: { url: string; rumbo?: number; onRumbo?: (grados: number) => void }) {
   return (
     <Canvas camera={{ position: [0, 0, 0.01], fov: 75 }} dpr={[1, 2]}>
+      <RumboInicial url={url} grados={rumbo} />
       <Suspense
         fallback={
           <Html center>

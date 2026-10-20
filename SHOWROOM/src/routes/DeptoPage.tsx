@@ -48,7 +48,7 @@ export function DeptoPage() {
         {vista === "360" && (
           <div className="capa-lienzo">
             <Suspense fallback={<p className="cargando centrado">Cargando 360°</p>}>
-              <Panorama360 url={recurso(ambienteActual.panorama)} onRumbo={setRumbo} />
+              <Panorama360 url={recurso(ambienteActual.panorama)} rumbo={ambienteActual.rumbo} onRumbo={setRumbo} />
             </Suspense>
           </div>
         )}

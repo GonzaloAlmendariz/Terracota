@@ -12,7 +12,7 @@ pnpm dev                 # http://localhost:5173/showroom/
 pnpm build               # dist/ para GitHub Pages (lo hace el workflow)
 pnpm demo                # dist-demo/: versión autocontenida para compartir
 pnpm modelo:prueba       # regenera public/modelos/*.glb
-pnpm 360:prueba          # regenera public/360/prueba/*.png
+pnpm 360:prueba          # renderiza public/360/<tipologia>/*.webp desde el modelo
 pnpm unidades -- archivo.xlsx   # Excel del cliente → data/unidades.json
 pnpm unidades -- --plantilla    # escribe data/plantilla-unidades.xlsx
 ```
@@ -33,7 +33,7 @@ pnpm unidades -- --plantilla    # escribe data/plantilla-unidades.xlsx
    Cada ambiente es un grupo llamado `ambiente:<id>` (o `ambiente-<id>`,
    `ambiente_<id>`) con su piso y mobiliario; el `<id>` debe coincidir con
    `data/unidades.json`. Muros cortados a ~2.5 m, sin techo. Unidades en metros.
-2. **Panorámicas** (`public/360/<tipo>/<ambiente>.jpg`): cámara esférica de
+2. **Panorámicas** (`public/360/<tipologia>/<ambiente>.webp` o `.jpg`): cámara esférica de
    V-Ray, 2:1 (6000×3000 o más), a 1.55 m de altura, exportadas a JPG/WebP.
 3. **Unidades**: el Excel del cliente con las columnas de
    `data/plantilla-unidades.xlsx`; el script valida estados y tipologías.

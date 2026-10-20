@@ -14,32 +14,33 @@
         {
           "id": "sala",
           "nombre": "Sala-comedor",
-          "panorama": "360/prueba/sala.png"
+          "panorama": "360/tipo-a/sala.webp",
+          "rumbo": 180
         },
         {
           "id": "cocina",
           "nombre": "Cocina",
-          "panorama": "360/prueba/cocina.png"
+          "panorama": "360/tipo-a/cocina.webp"
         },
         {
           "id": "dormitorio",
           "nombre": "Dormitorio principal",
-          "panorama": "360/prueba/dormitorio.png"
+          "panorama": "360/tipo-a/dormitorio.webp"
         },
         {
           "id": "bano-principal",
           "nombre": "Baño principal",
-          "panorama": "360/prueba/bano-principal.png"
+          "panorama": "360/tipo-a/bano-principal.webp"
         },
         {
           "id": "bano-visitas",
           "nombre": "Baño de visitas",
-          "panorama": "360/prueba/bano-visitas.png"
+          "panorama": "360/tipo-a/bano-visitas.webp"
         },
         {
           "id": "terraza",
           "nombre": "Terraza",
-          "panorama": "360/prueba/terraza.png"
+          "panorama": "360/tipo-a/terraza.webp"
         }
       ]
     },
@@ -50,32 +51,33 @@
         {
           "id": "sala",
           "nombre": "Sala-comedor",
-          "panorama": "360/prueba/sala.png"
+          "panorama": "360/tipo-b/sala.webp",
+          "rumbo": 180
         },
         {
           "id": "cocina",
           "nombre": "Cocina",
-          "panorama": "360/prueba/cocina.png"
+          "panorama": "360/tipo-b/cocina.webp"
         },
         {
           "id": "dormitorio",
           "nombre": "Dormitorio principal",
-          "panorama": "360/prueba/dormitorio.png"
+          "panorama": "360/tipo-b/dormitorio.webp"
         },
         {
           "id": "bano-principal",
           "nombre": "Baño principal",
-          "panorama": "360/prueba/bano-principal.png"
+          "panorama": "360/tipo-b/bano-principal.webp"
         },
         {
           "id": "bano-visitas",
           "nombre": "Baño de visitas",
-          "panorama": "360/prueba/bano-visitas.png"
+          "panorama": "360/tipo-b/bano-visitas.webp"
         },
         {
           "id": "terraza",
           "nombre": "Terraza",
-          "panorama": "360/prueba/terraza.png"
+          "panorama": "360/tipo-b/terraza.webp"
         }
       ]
     }

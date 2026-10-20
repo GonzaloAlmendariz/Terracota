@@ -58,6 +58,9 @@ function Maqueta({ modelo, ambientes, vista, onAmbiente }: Props) {
 
   // Copia propia de la escena y de sus materiales: el resaltado de un ambiente
   // no debe teñir a los demás que comparten material.
+  // Sólo cuenta como ambiente un nodo cuyo id está en los datos: un modelo real
+  // puede traer piezas con nombres parecidos («ambiente:sala-7») dentro del grupo.
+  const conocidos = useMemo(() => new Set(ambientes.map((a) => a.id)), [ambientes]);
   const { raiz, info, caja } = useMemo(() => {
     const raiz = scene.clone(true);
     const info: InfoAmbiente[] = [];
@@ -68,14 +71,14 @@ function Maqueta({ modelo, ambientes, vista, onAmbiente }: Props) {
         o.material = (o.material as THREE.Material).clone();
       }
       const id = ambienteDe(o);
-      if (id) {
+      if (id && conocidos.has(id)) {
         const centro = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3());
         info.push({ id, nodo: o, centro });
       }
     });
     const caja = new THREE.Box3().setFromObject(raiz);
     return { raiz, info, caja };
-  }, [scene]);
+  }, [scene, conocidos]);
 
   const nombres = useMemo(() => new Map(ambientes.map((a) => [a.id, a.nombre])), [ambientes]);
   const conPanorama = useMemo(() => new Set(ambientes.map((a) => a.id)), [ambientes]);
@@ -139,7 +142,7 @@ function Maqueta({ modelo, ambientes, vista, onAmbiente }: Props) {
   const idDe = (e: ThreeEvent<PointerEvent | MouseEvent>): string | null => {
     for (let o: THREE.Object3D | null = e.object; o; o = o.parent) {
       const id = ambienteDe(o);
-      if (id) return id;
+      if (id && conocidos.has(id)) return id;
     }
     return null;
   };

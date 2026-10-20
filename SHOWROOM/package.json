@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "modelo:prueba": "node scripts/generar-modelo-prueba.mjs",
-    "360:prueba": "node scripts/generar-360-prueba.mjs",
+    "360:prueba": "node scripts/renderizar-360-prueba.mjs",
     "unidades": "node scripts/excel-a-unidades.mjs",
     "demo": "VITE_DEMO=1 vite build --base ./ --outDir dist-demo && node scripts/armar-demo-artifact.mjs"
   },
@@ -27,7 +27,6 @@
     "@types/react-dom": "18.3.1",
     "@types/three": "0.170.0",
     "@vitejs/plugin-react": "4.3.4",
-    "pngjs": "7.0.0",
     "typescript": "5.6.3",
     "vite": "6.0.3",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"

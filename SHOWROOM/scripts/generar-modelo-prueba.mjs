@@ -143,7 +143,8 @@ function construir(nombre, espejo) {
   const bloque = (padre, material, x0, z0, x1, z1, y0, y1) => {
     const [a, b] = [fx(x0), fx(x1)].sort((p, q) => p - q);
     const nodo = doc
-      .createNode(`${padre.getName()}-${n++}`)
+      // Las piezas no llevan el prefijo «ambiente:»: sólo el grupo del ambiente.
+      .createNode(`pieza-${n++}`)
       .setMesh(doc.createMesh().addPrimitive(caja(doc, buffer, b - a, y1 - y0, z1 - z0).setMaterial(materiales[material])))
       .setTranslation([(a + b) / 2, (y0 + y1) / 2, (z0 + z1) / 2]);
     padre.addChild(nodo);
