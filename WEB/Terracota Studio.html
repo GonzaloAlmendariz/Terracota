@@ -127,6 +127,12 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
   .hero__lede { max-width: 38ch; color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.65; }
   .hero__cta { display:inline-flex; align-items:center; gap:10px; padding: 14px 22px; background: #fff; color: #0f0c09; border-radius: 999px; font-family: var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; transition: transform .3s, background .3s, color .3s; }
   .hero__cta:hover{ transform: translateY(-2px); background: var(--accent); color: #fff;}
+  .hero__ctas { display:flex; flex-wrap:wrap; gap: 10px; }
+  .hero__cta--ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.55); }
+  .hero__cta--ghost:hover { border-color: var(--accent); }
+  /* El enlace al recorrido lleva un punto de acento: es otra página, no una sección. */
+  .nav__tour { display:inline-flex; align-items:center; gap: 8px; }
+  .nav__tour::before { content:''; width:5px; height:5px; border-radius:50%; background: var(--accent-soft); }
   .hero__cta .arr { display:inline-block; transition: transform .3s; }
   .hero__cta:hover .arr { transform: translate(3px,-3px); }
 
@@ -137,6 +143,8 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
   .hero__scroll svg{ stroke: #fff; }
 
   @media (max-width: 900px){ .hero__content{ grid-template-columns: 1fr; padding: 24px; } .hero__footer{ left:20px; right:20px; } }
+  /* Con dos botones apilados, el contenido llegaba hasta el pie de la portada (posición absoluta): se le reserva su alto. */
+  @media (max-width: 900px){ .hero { padding-bottom: 96px; } }
 
   /* Section frame */
   section { position:relative; }
@@ -316,6 +324,9 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
   .menu-overlay .menu-list a em { font-family: var(--serif); font-style: italic; font-weight: 300; text-transform: none; letter-spacing: -0.02em; color: var(--accent-soft);}
   .menu-overlay .mfooter { display:flex; justify-content:space-between; color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing:.2em; text-transform:uppercase;}
   @media (max-width: 900px){ .menu-overlay{padding: 80px 20px 30px} }
+  /* En teléfonos bajos el índice no cabe: se desplaza en vez de quedar cortado. */
+  .menu-overlay { overflow-y: auto; overscroll-behavior: contain; }
+  .menu-overlay .menu-list { justify-content: safe center; }
 
   /* Tweaks */
   .tweaks { position: fixed; bottom: 24px; right: 24px; z-index: 700; background: var(--bg-soft); border:1px solid var(--line-strong); padding: 20px; width: 300px; border-radius: 12px; display: none; font-size: 13px; }
@@ -581,6 +592,7 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
       <a href="#services" data-cursor="link">Servicios</a>
       <a href="#team" data-cursor="link">Equipo</a>
       <a href="#portfolio" data-cursor="link">Portafolio</a>
+      <a href="showroom/" class="nav__tour" data-cursor="link">Recorrido virtual</a>
       <a href="#contact" data-cursor="link">Contacto</a>
     </div>
     <button class="nav__menu" id="btn-menu" data-cursor="link">
@@ -602,6 +614,7 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
       <a href="#team" data-menu-link><span class="n">04</span><span><em>Equipo</em></span></a>
       <a href="#portfolio" data-menu-link><span class="n">05</span><span>Portafolio</span></a>
       <a href="#contact" data-menu-link><span class="n">06</span><span><em>Contacto</em></span></a>
+      <a href="showroom/" data-menu-link><span class="n">3D</span><span>Recorrido <em>virtual</em></span></a>
     </div>
     <div class="mfooter">
       <span>terracota.studiointerior@gmail.com</span>
@@ -620,7 +633,10 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
         <div class="hero__meta">
           <div class="eyebrow" style="color:rgba(255,255,255,0.7)">Interiorismo residencial y comercial · Lima, Perú</div>
           <p class="hero__lede">Diseñamos casas, departamentos, oficinas y espacios comerciales con criterio, carácter y propósito. Cada proyecto se trabaja como una pieza única — con responsabilidad, proceso y detalle.</p>
-          <a href="#portfolio" class="hero__cta" data-cursor="view">Ver portafolio <span class="arr">↗</span></a>
+          <div class="hero__ctas">
+            <a href="#portfolio" class="hero__cta" data-cursor="view">Ver portafolio <span class="arr">↗</span></a>
+            <a href="showroom/" class="hero__cta hero__cta--ghost" data-cursor="view">Recorrido virtual <span class="arr">↗</span></a>
+          </div>
         </div>
       </div>
       <div class="hero__footer">
@@ -754,6 +770,8 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
         if (e.target.closest('[data-slider]')) return;
         // let the project overlay scroll natively
         if (e.target.closest('.project-overlay')) return;
+        // el menú abierto se desplaza por su cuenta; sin esto la rueda movía la página de atrás
+        if (e.target.closest('.menu-overlay')) return;
         if (e.ctrlKey) return;
         e.preventDefault();
         target = Math.max(0, Math.min(document.documentElement.scrollHeight - window.innerHeight, target + e.deltaY * 1.15));
@@ -800,9 +818,13 @@ window.TWEAKS = /*EDITMODE-BEGIN*/{
     });
 
     const menu = document.getElementById('menu-overlay');
-    document.getElementById('btn-menu').addEventListener('click', ()=>menu.classList.add('open'));
-    document.getElementById('btn-menu-close').addEventListener('click', ()=>menu.classList.remove('open'));
-    document.querySelectorAll('[data-menu-link]').forEach(a => a.addEventListener('click', ()=>menu.classList.remove('open')));
+    // Con el menú abierto la página de atrás no se mueve (teclado, trackpad o rueda).
+    const abrirMenu = () => { menu.classList.add('open'); document.documentElement.style.overflow = 'hidden'; menu.scrollTop = 0; };
+    const cerrarMenu = () => { menu.classList.remove('open'); document.documentElement.style.overflow = ''; };
+    document.getElementById('btn-menu').addEventListener('click', abrirMenu);
+    document.getElementById('btn-menu-close').addEventListener('click', cerrarMenu);
+    document.querySelectorAll('[data-menu-link]').forEach(a => a.addEventListener('click', cerrarMenu));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('open')) cerrarMenu(); });
 
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('in'); });

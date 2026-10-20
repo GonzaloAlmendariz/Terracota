@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Encabezado } from "../components/Encabezado";
+import { Encabezado, FlechaIzquierda } from "../components/Encabezado";
 import { EstadoPunto } from "../components/FichaUnidad";
 import { ESTADOS, formatoArea, formatoPrecio, proyecto, unidades, type Estado, type Unidad } from "../lib/datos";
 import { rutaDepto } from "../lib/direccion";
@@ -65,7 +65,16 @@ export function EdificioPage() {
         </Suspense>
       </div>
 
-      <Encabezado />
+      <Encabezado>
+        {/* Vuelta a la web del estudio, que vive un nivel arriba en el mismo sitio.
+            En la demo autocontenida no hay web a la que volver. */}
+        {import.meta.env.VITE_DEMO !== "1" && (
+          <a href={`${import.meta.env.BASE_URL}../`} className="volver">
+            <FlechaIzquierda />
+            Terracota Studio
+          </a>
+        )}
+      </Encabezado>
 
       <section className="capa portada" aria-label="Proyecto">
         <span className="cota">{proyecto.distrito} · Residencial</span>

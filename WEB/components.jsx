@@ -1025,6 +1025,7 @@ function Footer() {
         <a href="#portfolio" data-cursor="link">Portafolio</a>
         <a href="#portfolio" data-cursor="link">Residencial</a>
         <a href="#portfolio" data-cursor="link">Comercial</a>
+        <a href="showroom/" data-cursor="link">Recorrido virtual</a>
       </div>
       <div className="col">
         <div className="k eyebrow">Contacto</div>
