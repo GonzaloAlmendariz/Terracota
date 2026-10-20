@@ -1426,3 +1426,22 @@ a {
 .numero-ambiente:active {
   background: var(--accent);
 }
+
+/* Una vista que no pudo cargar: el aviso ocupa su lienzo, el resto sigue. */
+.vista-fallida {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+  color: var(--cream-2);
+  background: var(--bg);
+}
+
+.vista-fallida p {
+  margin: 0;
+  max-width: 34ch;
+}

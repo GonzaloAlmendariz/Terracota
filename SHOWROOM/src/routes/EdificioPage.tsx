@@ -1,11 +1,13 @@
-import { lazy, Suspense, useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { LimiteDeError } from "../components/LimiteDeError";
+import { lazyConRecarga } from "../lib/cargaDiferida";
 import { Encabezado, FlechaIzquierda } from "../components/Encabezado";
 import { EstadoPunto } from "../components/FichaUnidad";
 import { ESTADOS, formatoArea, formatoPrecio, proyecto, unidades, type Estado, type Unidad } from "../lib/datos";
 import { rutaDepto } from "../lib/direccion";
 
-const Edificio3D = lazy(() => import("../components/Edificio3D").then((m) => ({ default: m.Edificio3D })));
+const Edificio3D = lazyConRecarga(() => import("../components/Edificio3D").then((m) => ({ default: m.Edificio3D })));
 
 const FILTROS: { id: Estado | "todos"; etiqueta: string }[] = [
   { id: "todos", etiqueta: "Todos" },
@@ -60,9 +62,11 @@ export function EdificioPage() {
   return (
     <div className="pantalla">
       <div className="lienzo">
-        <Suspense fallback={<p className="cargando centrado">Levantando el edificio</p>}>
-          <Edificio3D unidades={unidades} visibles={idsVisibles} nivel={nivel} onElegir={elegir} />
-        </Suspense>
+        <LimiteDeError nombre="el edificio">
+          <Suspense fallback={<p className="cargando centrado">Levantando el edificio</p>}>
+            <Edificio3D unidades={unidades} visibles={idsVisibles} nivel={nivel} onElegir={elegir} />
+          </Suspense>
+        </LimiteDeError>
       </div>
 
       <Encabezado>

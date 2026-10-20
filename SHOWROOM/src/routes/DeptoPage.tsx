@@ -1,15 +1,17 @@
-import { lazy, Suspense, useMemo, useRef, useState } from "react";
+import { Suspense, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { LimiteDeError } from "../components/LimiteDeError";
+import { lazyConRecarga } from "../lib/cargaDiferida";
 import { Encabezado, FlechaIzquierda } from "../components/Encabezado";
 import { FichaUnidad } from "../components/FichaUnidad";
 import { NOMBRE_VISTA, RielVistas } from "../components/RielVistas";
 import { buscarUnidad, recurso, recursoModelo, tipologias, unidades } from "../lib/datos";
 import { esVistaMaqueta, rutaDepto, useVistaDepto, type Vista, type VistaMaqueta } from "../lib/direccion";
 
-const Depto3D = lazy(() => import("../components/Depto3D").then((m) => ({ default: m.Depto3D })));
-const Panorama360 = lazy(() => import("../components/Panorama360").then((m) => ({ default: m.Panorama360 })));
-const Recorrido3D = lazy(() => import("../components/Recorrido3D").then((m) => ({ default: m.Recorrido3D })));
-const Edificio3D = lazy(() => import("../components/Edificio3D").then((m) => ({ default: m.Edificio3D })));
+const Depto3D = lazyConRecarga(() => import("../components/Depto3D").then((m) => ({ default: m.Depto3D })));
+const Panorama360 = lazyConRecarga(() => import("../components/Panorama360").then((m) => ({ default: m.Panorama360 })));
+const Recorrido3D = lazyConRecarga(() => import("../components/Recorrido3D").then((m) => ({ default: m.Recorrido3D })));
+const Edificio3D = lazyConRecarga(() => import("../components/Edificio3D").then((m) => ({ default: m.Edificio3D })));
 
 const PISTA: Partial<Record<Vista, string>> = {
   plano: "Toca un ambiente para verlo en 360°",
@@ -44,41 +46,49 @@ export function DeptoPage() {
             y sin renderizar. Volver es instantáneo y conserva la cámara;
             desmontarla recreaba WebGL y dejaba un cuadro en negro. */}
         <div className={`capa-lienzo${esVistaMaqueta(vista) ? "" : " en-pausa"}`}>
-          <Suspense fallback={<p className="cargando centrado">Preparando la maqueta</p>}>
-            <Depto3D
-              modelo={recursoModelo(tip.modelo)}
-              ambientes={tip.ambientes}
-              vista={ultimaMaqueta.current}
-              activa={esVistaMaqueta(vista)}
-              onAmbiente={(id) => ir("360", id)}
-            />
-          </Suspense>
+          <LimiteDeError nombre="la maqueta">
+            <Suspense fallback={<p className="cargando centrado">Preparando la maqueta</p>}>
+              <Depto3D
+                modelo={recursoModelo(tip.modelo)}
+                ambientes={tip.ambientes}
+                vista={ultimaMaqueta.current}
+                activa={esVistaMaqueta(vista)}
+                onAmbiente={(id) => ir("360", id)}
+              />
+            </Suspense>
+          </LimiteDeError>
         </div>
         {vista === "360" && (
           <div className="capa-lienzo">
-            <Suspense fallback={<p className="cargando centrado">Cargando 360°</p>}>
-              <Panorama360 url={recurso(ambienteActual.panorama)} rumbo={ambienteActual.rumbo} onRumbo={setRumbo} />
-            </Suspense>
+            <LimiteDeError nombre="la vista 360°">
+              <Suspense fallback={<p className="cargando centrado">Cargando 360°</p>}>
+                <Panorama360 url={recurso(ambienteActual.panorama)} rumbo={ambienteActual.rumbo} onRumbo={setRumbo} />
+              </Suspense>
+            </LimiteDeError>
           </div>
         )}
         {vista === "recorrido" && (
           <div className="capa-lienzo">
-            <Suspense fallback={<p className="cargando centrado">Preparando el recorrido</p>}>
-              <Recorrido3D modelo={recursoModelo(tip.modelo)} ambientes={tip.ambientes} ambiente={ambienteActual.id} />
-            </Suspense>
+            <LimiteDeError nombre="el recorrido">
+              <Suspense fallback={<p className="cargando centrado">Preparando el recorrido</p>}>
+                <Recorrido3D modelo={recursoModelo(tip.modelo)} ambientes={tip.ambientes} ambiente={ambienteActual.id} />
+              </Suspense>
+            </LimiteDeError>
           </div>
         )}
         {vista === "ubicacion" && (
           <div className="capa-lienzo">
-            <Suspense fallback={<p className="cargando centrado">Levantando el edificio</p>}>
-              <Edificio3D
-                unidades={unidades}
-                visibles={todas}
-                nivel={unidad.piso}
-                destacada={unidad.id}
-                onElegir={(u) => navegar(rutaDepto(u.piso, u.id, "ubicacion"))}
-              />
-            </Suspense>
+            <LimiteDeError nombre="la ubicación">
+              <Suspense fallback={<p className="cargando centrado">Levantando el edificio</p>}>
+                <Edificio3D
+                  unidades={unidades}
+                  visibles={todas}
+                  nivel={unidad.piso}
+                  destacada={unidad.id}
+                  onElegir={(u) => navegar(rutaDepto(u.piso, u.id, "ubicacion"))}
+                />
+              </Suspense>
+            </LimiteDeError>
           </div>
         )}
       </div>
